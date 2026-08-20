@@ -1,104 +1,100 @@
-# Café Point of Sale (POS) System
+# Cafe Corner – Café Management System
 
-A Java Swing desktop application for managing a café's daily orders, menu, and staff — built with a MySQL backend, role-based authentication, and multithreading.
+A Java Swing-based Café Management System developed as an Advanced Programming project.
 
-Built for the **Advanced Programming** course.
+## Technologies Used
 
-**Team:** Zainab & Habiba
+* Java
+* Java Swing
+* MySQL
+* JDBC
+* MySQL Connector/J
 
----
+## Main Features
 
-## What It Does
-
-A single desktop app that runs a café's front counter and back office:
-
-- **Cashiers** log in, browse the live menu, build a cart, and place orders.
-- **Admins** log in to manage the menu (add/edit/soft-delete items), manage staff accounts, and view sales reports and full order history.
-- Every order is saved to a real MySQL database — with a live-updating clock running on its own thread, and password security via SHA-256 hashing.
-
----
-
-## Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Language | Java |
-| UI | Java Swing |
-| Database | MySQL (via XAMPP / phpMyAdmin) |
-| Connectivity | JDBC (`mysql-connector-j`) |
-| Architecture | DAO pattern (`UserDAO`, `MenuDAO`, `OrderDAO`) |
-| Security | SHA-256 password hashing |
-| Concurrency | Custom `Thread` subclass for the live clock |
-
----
+* Admin Login
+* Cashier Login
+* Menu Management
+* Staff Management
+* New Order
+* Cart Management
+* Receipt Generation
+* Order History
+* Sales Report
 
 ## Project Structure
 
-```
-Project/
-├── src/
-│   ├── Backend/          # Data layer — DB connection, DAOs, models, hashing, threading
-│   │   ├── DBConnection.java
-│   │   ├── UserDAO.java
-│   │   ├── MenuDAO.java
-│   │   ├── OrderDAO.java
-│   │   ├── User.java
-│   │   ├── MenuItem.java
-│   │   ├── CartItem.java
-│   │   ├── PasswordUtil.java
-│   │   └── ClockThread.java
-│   ├── Frontend/         # Swing UI — every screen in the app
-│   │   ├── LoginFrame.java
-│   │   ├── AdminDashboard.java
-│   │   ├── CashierDashboard.java
-│   │   ├── NewOrderFrame.java
-│   │   ├── ManageMenuFrame.java
-│   │   ├── ManageStaffFrame.java
-│   │   ├── AllOrdersFrame.java
-│   │   ├── OrderHistoryFrame.java
-│   │   ├── SalesReportFrame.java
-│   │   ├── UITheme.java
-│   │   └── cafe_bg.jpg
-│   └── Main.java         # Entry point
-├── lib/
-│   └── mysql-connector-j-9.7.0/mysql-connector-j-9.7.0.jar
-└── .vscode/settings.json
-```
+The project backend contains:
 
-`Backend` and `Frontend` are plain folders (default Java package) — kept separate purely for readability, not as Java packages, so no imports are needed between them.
+* `DBConnection.java` – Database connectivity
+* `User.java` – User model
+* `UserDAO.java` – User database operations
+* `MenuItem.java` – Menu item model
+* `MenuDAO.java` – Menu database operations
+* `CartItem.java` – Cart item and subtotal management
+* `OrderDAO.java` – Order processing and database operations
+* `PasswordUtil.java` – Password hashing
+* `ClockThread.java` – Real-time clock using multithreading
 
----
+## Requirements
 
-## Database Schema
+Before running the project, make sure the following are installed:
 
-Four MySQL tables:
+* Java JDK
+* XAMPP
+* MySQL
+* IntelliJ IDEA or another Java IDE
 
-- **users** — login credentials, role (`cashier` / `admin`), full name
-- **menu_items** — name, price, category, active/soft-deleted flag
-- **orders** — order ID, cashier, timestamp, total
-- **order_details** — line items per order (menu item + quantity)
+## Database Setup
 
----
+1. Open XAMPP.
+2. Start **MySQL**.
+3. Open **phpMyAdmin**.
+4. Create/import the `cafe_pos` database.
+5. Import the provided `cafe_pos.sql` file into the database.
 
 ## How to Run
 
-1. Start **MySQL** (and Apache, if you want phpMyAdmin) in XAMPP Control Panel.
-2. Import the database schema via phpMyAdmin (`localhost/phpmyadmin`).
-3. Open the project in **VS Code** with the Java Extension Pack installed.
-4. Open `src/Main.java` and click the **Run** link above `public static void main`.
-5. Log in with a seeded admin/cashier account (see database setup notes).
+1. Start MySQL from XAMPP.
+2. Make sure the `cafe_pos` database has been imported.
+3. Open the project in a Java IDE.
+4. Make sure the MySQL Connector/J library is available to the project.
+5. Run `Main.java`.
+6. The Cafe Corner login screen will appear.
+7. Log in using one of the demo accounts provided below.
 
----
+## Database Configuration
 
-## Key Backend Concepts
+The application currently uses:
 
-- **DAO Pattern** — all SQL lives in `UserDAO` / `MenuDAO` / `OrderDAO`; UI classes never touch JDBC directly.
-- **Transactions** — `OrderDAO.placeOrder()` inserts an order and its line items as a single transaction; if any part fails, it rolls back so no partial orders are ever saved.
-- **Multithreading** — `ClockThread` updates the dashboard clock every second on a background thread, using `SwingUtilities.invokeLater()` to stay safe on the Event Dispatch Thread.
-- **Security** — passwords are hashed with SHA-256 before being stored or compared; nothing is ever stored in plain text.
+* Database: `cafe_pos`
+* Host: `localhost`
+* Port: `3306`
+* Username: `root`
+* Password: empty
 
----
+These settings are configured in `DBConnection.java`.
 
-## License
+## Demo Login
 
-Course project — Advanced Programming.
+### Admin
+
+* Username: `admin`
+* Password: `1234`
+
+### Cashier
+
+* Username: `cashier1`
+* Password: `1234`
+
+## Java Concepts Implemented
+
+* Object-Oriented Programming
+* Exception Handling
+* Multithreading
+* JDBC Database Connectivity
+* DAO (Data Access Object) Pattern
+
+## Presentation
+
+This repository contains the source code used for the Cafe Corner project presentation, with particular focus on the Java backend implementation.
